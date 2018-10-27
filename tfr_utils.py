@@ -11,6 +11,8 @@ def tfr_write(save_dir,data_sets):
         filename = os.path.join(save_dir, data_splits[d] + '.tfrecords')
         writer = tf.python_io.TFRecordWriter(filename)
         for index in range(data_set.images.shape[0]):
+            # need to call .tostring() to convert numpy array
+            # to bytes 
             image = data_set.images[index].tostring()
             example = tf.train.Example(features=tf.train.Features(
                 feature={
