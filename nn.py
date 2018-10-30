@@ -42,12 +42,17 @@ def cnn(images_batch, keep_prob):
     # reducing the output of the whole graph to the number of classes we are modeling
     # in mnist this is 10 for the ten digits ( 0 - 9 ) we are classifying
     # you can vary this to experiment  
+    h2shape = h_pool2.shape
+    conv_output1 = int(h2shape[1])
+    conv_output2 = int(h2shape[2])
+    conv_output3 = int(h2shape[3])
+    
     with tf.name_scope('fc1'):
-        W_fc1 = weight_variable([7 * 7 * 64, feature_number])
+        W_fc1 = weight_variable([conv_output1 * conv_output2 * conv_output3, feature_number])
         print("  W_fc1.shape: {} ".format(W_fc1.shape))
         b_fc1 = bias_variable([feature_number])
 
-        h_pool2_flat = tf.reshape(h_pool2, [-1, 7*7*64])
+        h_pool2_flat = tf.reshape(h_pool2, [-1, conv_output1 * conv_output2 * conv_output3])
         print("  h_pool2_flat.shape: {} ".format(h_pool2_flat.shape))
         h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
 
