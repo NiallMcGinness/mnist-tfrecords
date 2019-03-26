@@ -2,13 +2,14 @@ import tensorflow as tf
 import numpy as np
 import os, sys
 import time
+import logging 
 
 #feature_column = [tf.feature_column.numeric_column(key='image', shape=(784))]
 
 feature_column = [tf.feature_column.numeric_column(key="image", shape=(784,))]
 
 model = tf.estimator.DNNClassifier([100,100], n_classes=10, feature_columns=feature_column)
-
+logging.getLogger().setLevel(logging.INFO)
 def _parse_(serialized_example):
     feature = {'image_raw':tf.FixedLenFeature([],tf.string),
                 'label':tf.FixedLenFeature([],tf.int64)}
@@ -25,4 +26,4 @@ def tfrecord_train_input_fn(batch_size=32):
     tfrecord_iterator = tfrecord_dataset.make_one_shot_iterator()
     return tfrecord_iterator.get_next()
 
-model.train(lambda:tfrecord_train_input_fn(32),steps=200)
+model.train(lambda:tfrecord_train_input_fn(32),steps=2000)
