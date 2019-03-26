@@ -48,4 +48,12 @@ feature_column = [tf.feature_column.numeric_column(key="image", shape=(784,))]
 
 model = tf.estimator.DNNClassifier([100,100], n_classes=10, feature_columns=feature_column)
 #lambda:tfrecord_train_input_fn(32)
-model.train(lambda:input_fn(train_tfrecord_path), steps=10000)
+
+count = 0 
+while ( count < 100 ):
+	model.train(lambda:input_fn(train_tfrecord_path), steps=1000)
+	result = mode.evaluate(lambda:input_fn(test_tfrecord_path))
+	print(result)
+	print(" accuracy : {} ".format(result["accuracy"]))
+	sys.stdout.flush()
+	count += 1
