@@ -52,7 +52,7 @@ model = tf.estimator.DNNClassifier([100,100], n_classes=10, feature_columns=feat
 count = 0 
 while ( count < 100 ):
 	model.train(lambda:input_fn(train_tfrecord_path), steps=1000)
-	result = mode.evaluate(lambda:input_fn(test_tfrecord_path))
+	result = model.evaluate(lambda:input_fn(test_tfrecord_path))
 	print(result)
 	print(" accuracy : {} ".format(result["accuracy"]))
 	sys.stdout.flush()
