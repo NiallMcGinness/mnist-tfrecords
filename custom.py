@@ -2,6 +2,8 @@ import tensorflow as tf
 import numpy as np
 import os, sys
 import time
+# disable gpu warnings 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 
 train_tfrecord_path = os.getcwd() + "/data/mnist/train.tfrecords"
 
